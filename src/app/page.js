@@ -1,4 +1,5 @@
 
+import About from "@/components/Home/About/About";
 import Header from "@/components/Home/Header/Header";
 import Highlight from "@/components/Home/Highlight/Highlight";
 import Portfolio from "@/components/Home/Portfolio/Portfolio";
@@ -9,7 +10,8 @@ import Footer from "@/components/Shared/Footer/Footer";
 export default function Home() {
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
+      <About />
       <Services />
       <Highlight />
       <Portfolio />
