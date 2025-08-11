@@ -175,13 +175,13 @@ export default function Testimonial() {
 
         {/* Center Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left flex-1 z-20 px-6">
-          <h2 className="text-5xl font-bold mb-14">Success Stories</h2>
+          <h2 className="text-5xl font-bold mb-10 pt-6">Testimonial Stories</h2>
           <h3 className="text-lg font-semibold">{imageSets[currentSetIndex].title}</h3>
           <p className="text-gray-400 max-w-lg mb-4">
             {imageSets[currentSetIndex].description}
           </p>
           <a href="#" className="text-white font-medium hover:underline mb-6">
-            View their story →
+            View their review →
           </a>
 
           <div className="flex items-center gap-4 mb-16 pt-2">
