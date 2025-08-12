@@ -4,6 +4,7 @@ import Header from "@/components/Home/Header/Header";
 import Highlight from "@/components/Home/Highlight/Highlight";
 import Portfolio from "@/components/Home/Portfolio/Portfolio";
 import Pricing from "@/components/Home/Pricing/Pricing";
+import Projects from "@/components/Home/Project/Project";
 import Services from "@/components/Home/Services/Services";
 import Testimonial from "@/components/Home/Testimonial/Testimonial";
 import Footer from "@/components/Shared/Footer/Footer";
@@ -14,8 +15,9 @@ export default function Home() {
       <Header />
       <About />
       <Services />
-      <Highlight />
       <Portfolio />
+      <Highlight />
+      <Projects />
       <Pricing />
       <Testimonial />
       <Footer />
