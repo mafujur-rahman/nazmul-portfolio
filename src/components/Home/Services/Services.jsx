@@ -12,14 +12,14 @@ const services = [
         bgImage: "/bg-1.jpg"
     },
     {
-        title: "Illustration Design",
+        title: "UI/UX Design",
         description:
-            "Create custom illustrations that bring unique visual flair to your marketing, products, and digital platforms.",
-        text: "Custom Artworks",
-        bgImage: "/bg-2.jpg"
+            "Design intuitive user interfaces and experiences for websites and mobile apps that enhance usability and engagement.",
+        text: "App & Web UI",
+        bgImage: "/bg-1.jpg"
     },
     {
-        title: "UI/UX Design",
+        title: "Web Development",
         description:
             "Design intuitive user interfaces and experiences for websites and mobile apps that enhance usability and engagement.",
         text: "App & Web UI",

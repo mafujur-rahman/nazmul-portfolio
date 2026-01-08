@@ -20,7 +20,6 @@ const Header = () => {
     const designerTextRef = useRef(null);
     const creativeTextRef = useRef(null);
     const rotatingTextRef = useRef(null);
-    const containerRef = useRef(null);
 
     // Text to rotate in the "CREATIVE" position
     const rotatingTexts = ['CREATIVE', 'GRAPHICS', 'UI/UX', 'DIGITAL'];
@@ -109,28 +108,6 @@ const Header = () => {
             });
         }, 3000);
 
-        // Set up scroll trigger for pinning and next section animation
-        ScrollTrigger.create({
-            trigger: headerRef.current,
-            start: "top top",
-            end: "+=100%",
-            pin: true,
-            pinSpacing: false,
-            onLeave: () => {
-                gsap.to(headerRef.current, {
-                    x: '0%',
-                    duration: 1,
-                    ease: 'power3.inOut'
-                });
-            },
-            onEnterBack: () => {
-                gsap.to(headerRef.current, {
-                    x: '0%',
-                    duration: 1,
-                    ease: 'power3.inOut'
-                });
-            }
-        });
 
         return () => {
             clearInterval(rotateInterval);
@@ -191,7 +168,7 @@ const Header = () => {
 
     return (
         <>
-            <div ref={containerRef}>
+            <div>
                 <section
                     ref={headerRef}
                     className="relative bg-black min-h-screen w-full overflow-hidden text-white font-sans px-6 bg-[url('/b-pic.jpg')] bg-cover bg-center flex flex-col justify-between"
@@ -254,7 +231,7 @@ const Header = () => {
 
                     {/* Center Content */}
                     <div className="flex flex-col items-center justify-center flex-grow text-center px-4 pt-44">
-                        <h1 className="text-7xl md:text-8xl lg:text-[120px] xl:text-[150px] 2xl:text-[180px] font-bold leading-none w-full">
+                        <h1 className="text-7xl md:text-8xl lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-none w-full">
                             <span 
                                 ref={creativeTextRef}
                                 className="block h-[1em] overflow-hidden relative"
@@ -268,7 +245,7 @@ const Header = () => {
                             </span>
                             <span 
                                 ref={designerTextRef}
-                                className="text-7xl md:text-8xl lg:text-[120px] xl:text-[150px] 2xl:text-[280px] font-bold leading-none w-full"
+                                className="text-7xl md:text-8xl lg:text-[120px] xl:text-[150px] 2xl:text-[200px] font-bold leading-none w-full"
                             >
                                 DESIGNER
                             </span>
@@ -289,7 +266,7 @@ const Header = () => {
                         {/* Left side with vertical line and text */}
                         <div className="flex items-center gap-4">
                             <div className="w-[2px] h-12 bg-gray-500"></div>
-                            <span className="uppercase tracking-widest text-sm text-gray-400">Portfolio 2025</span>
+                            <span className="uppercase tracking-widest text-sm text-gray-400">Portfolio 2026</span>
                         </div>
 
                         {/* Right side with social links */}
@@ -300,11 +277,6 @@ const Header = () => {
                             <a href="#" className="hover:text-white transition-colors">Behance</a>
                         </div>
                     </div>
-                </section>
-
-                {/* Next section that slides in from the right */}
-                <section className="relative bg-gray-100 min-h-screen w-full flex items-center justify-center">
-                    <About />
                 </section>
             </div>
         </>

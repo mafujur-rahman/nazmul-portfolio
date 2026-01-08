@@ -1,220 +1,114 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
 const projects = [
-    {
-        top: "/image-1.avif",
-        bottom: ["/image-2.jpg", "/image-3.png"],
-    },
-    {
-        top: "/image-1.avif",
-        bottom: ["/image-2.jpg", "/image-3.png"],
-    },
-    {
-        top: "/image-1.avif",
-        bottom: ["/image-2.jpg", "/image-3.png"],
-    },
-    {
-        top: "/image-1.avif",
-        bottom: ["/image-2.jpg", "/image-3.png"],
-    },
-    {
-        top: "/image-1.avif",
-        bottom: ["/image-2.jpg", "/image-3.png"],
-    },
+  "/image-1.avif",
+  "/image-2.jpg",
+  "/image-3.png",
+  "/image-1.avif",
 ];
 
-const Projects = () => {
-    const [index, setIndex] = useState(0);
-    const intervalRef = useRef();
+export default function Projects() {
+  const imageWrapperRef = useRef(null);
+  const [active, setActive] = useState(0);
 
-    const topRef = useRef(null);
-    const nextTopRef = useRef(null);
-    const bottomLeftRef = useRef(null);
-    const bottomRightRef = useRef(null);
-    const nextBottomLeftRef = useRef(null);
-    const nextBottomRightRef = useRef(null);
+  // 🔹 GSAP reveal animation
+  const revealImage = (src) => {
+    const slide = document.createElement("div");
+    slide.className = "absolute inset-0";
 
-    const goNext = () => {
-        const nextIndex = (index + 1) % projects.length;
-        const screenWidth = window.innerWidth;
+    slide.innerHTML = `
+      <img src="${src}" class="w-full h-full object-cover" />
+    `;
 
-        const tl = gsap.timeline();
+    imageWrapperRef.current.appendChild(slide);
 
-        // top image slide out
-        tl.to(topRef.current, {
-            x: -screenWidth,
-            opacity: 0,
-            duration: 1.7,
-            ease: "power2.inOut",
-            onStart: () => {
-                gsap.set(nextTopRef.current, { x: screenWidth, opacity: 1, zIndex: 10 });
-            },
-        });
-
-        // top image slide in
-        tl.to(
-            nextTopRef.current,
-            {
-                x: 0,
-                opacity: 1,
-                duration: 1.7,
-                ease: "power2.inOut",
-            },
-            "-=1.3"
-        );
-
-        // bottom image slide out
-        tl.to(
-            [bottomLeftRef.current, bottomRightRef.current],
-            {
-                x: -screenWidth,
-                opacity: 0,
-                duration: 1.7,
-                ease: "power2.inOut",
-                stagger: 0.3,
-                onStart: () => {
-                    gsap.set([nextBottomLeftRef.current, nextBottomRightRef.current], {
-                        x: screenWidth,
-                        opacity: 1,
-                        zIndex: 10,
-                    });
-                },
-            },
-            "<"
-        );
-
-        // bottom image slide in
-        tl.to(
-            [nextBottomLeftRef.current, nextBottomRightRef.current],
-            {
-                x: 0,
-                opacity: 1,
-                duration: 1.7,
-                ease: "power2.inOut",
-                stagger: 0.3,
-            },
-            "-=1.3"
-        );
-
-        // cleanup
-        tl.add(() => {
-            setIndex(nextIndex);
-            gsap.set(
-                [topRef.current, bottomLeftRef.current, bottomRightRef.current],
-                { x: 0, opacity: 1, zIndex: 0 }
-            );
-            gsap.set(
-                [nextTopRef.current, nextBottomLeftRef.current, nextBottomRightRef.current],
-                { x: 0, opacity: 0, zIndex: 0 }
-            );
-        });
-    };
-
-    useEffect(() => {
-        // Set up automatic slideshow
-        intervalRef.current = setInterval(goNext, 3000);
-        
-        // Clear interval on component unmount
-        return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-            }
-        };
-    }, [index]);
-
-    // Current and next projects for images
-    const currentProject = projects[index];
-    const nextIndex = (index + 1) % projects.length;
-    const nextProject = projects[nextIndex];
-
-    return (
-        <section className="bg-black text-white py-16 px-4 md:px-10 lg:px-16 overflow-hidden">
-            <div className="max-w-6xl mx-auto relative">
-                {/* Modern Header */}
-                <div className="mb-16">
-                    <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                        Featured Projects
-                    </h2>
-                    <p className="text-gray-300 text-xl md:text-2xl max-w-3xl leading-relaxed">
-                        Discover some of my finest graphic design work, blending creativity with visual storytelling to build compelling brand identities.
-                    </p>
-                </div>
-
-                {/* Top Image */}
-                <div className="relative h-[320px] md:h-[450px] mb-10">
-                    <div
-                        className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-10"
-                        ref={topRef}
-                    >
-                        <Image src={currentProject.top} alt="Top" layout="fill" className="object-cover" />
-                    </div>
-                    <div
-                        className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-0"
-                        ref={nextTopRef}
-                    >
-                        <Image src={nextProject.top} alt="Next Top" layout="fill" className="object-cover" />
-                    </div>
-                </div>
-
-                {/* Bottom Images */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
-                    <div className="relative h-[270px]">
-                        <div
-                            className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-10"
-                            ref={bottomLeftRef}
-                        >
-                            <Image
-                                src={currentProject.bottom[0]}
-                                alt="Bottom Left"
-                                layout="fill"
-                                className="object-cover"
-                            />
-                        </div>
-                        <div
-                            className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-0"
-                            ref={nextBottomLeftRef}
-                        >
-                            <Image
-                                src={nextProject.bottom[0]}
-                                alt="Next Bottom Left"
-                                layout="fill"
-                                className="object-cover"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="relative h-[270px]">
-                        <div
-                            className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-10"
-                            ref={bottomRightRef}
-                        >
-                            <Image
-                                src={currentProject.bottom[1]}
-                                alt="Bottom Right"
-                                layout="fill"
-                                className="object-cover"
-                            />
-                        </div>
-                        <div
-                            className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-0"
-                            ref={nextBottomRightRef}
-                        >
-                            <Image
-                                src={nextProject.bottom[1]}
-                                alt="Next Bottom Right"
-                                layout="fill"
-                                className="object-cover"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    gsap.fromTo(
+      slide,
+      { clipPath: "inset(0 0 0 100%)" },
+      {
+        clipPath: "inset(0 0 0 0%)",
+        duration: 1.3,
+        ease: "power4.out",
+      }
     );
-};
+  };
 
-export default Projects;
+  // autoplay
+  useEffect(() => {
+    revealImage(projects[0]);
+
+    const interval = setInterval(() => {
+      setActive((prev) => {
+        const next = (prev + 1) % projects.length;
+        revealImage(projects[next]);
+        return next;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleThumbClick = (i) => {
+    setActive(i);
+    revealImage(projects[i]);
+  };
+
+  return (
+    <section className="w-full  px-6 md:px-16 py-20 bg-gradient-to-r from-cyan-400 to-pink-500">
+      
+      {/* GRID */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start h-full">
+        
+        {/* LEFT — TEXT */}
+        <div className="flex flex-col justify-start">
+          <h2 className="text-white text-5xl md:text-6xl font-bold tracking-wide mb-6">
+            FEATURED <span className="font-light">PROJECTS</span>
+          </h2>
+
+          <p className="text-white/90 text-base leading-relaxed max-w-md">
+            Every project I create has a story behind it. It’s not just about
+            “making a website.” It’s about exploring an idea, experimenting,
+            failing a few times, and then finally watching it come alive on
+            screen.
+          </p>
+        </div>
+
+        {/* RIGHT — IMAGE + THUMBNAILS */}
+        <div className="flex flex-col justify-start gap-4">
+          
+          {/* MAIN IMAGE */}
+          <div className="relative w-full h-[360px] overflow-hidden rounded-lg shadow-lg">
+            <div ref={imageWrapperRef} className="absolute inset-0" />
+          </div>
+
+          {/* THUMBNAILS FULL WIDTH */}
+          <div className="flex gap-4 w-full">
+            {projects.map((src, i) => (
+              <button
+                key={i}
+                onClick={() => handleThumbClick(i)}
+                className={`relative flex-1 h-24 overflow-hidden rounded-lg border transition-all
+                  ${active === i
+                    ? "border-white"
+                    : "border-white/30 hover:border-white/70"
+                  }
+                `}
+              >
+                <Image
+                  src={src}
+                  alt="project thumbnail"
+                  fill
+                  className="object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
