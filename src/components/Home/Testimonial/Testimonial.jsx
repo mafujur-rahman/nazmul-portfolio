@@ -1,32 +1,38 @@
 'use client';
 import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaStar } from 'react-icons/fa';
 import gsap from 'gsap';
 
 export default function Testimonial() {
   const imageSets = [
-    { 
-      left: '/t1.png', 
-      middle: '/t2.webp', 
+    {
+      left: '/t1.png',
+      middle: '/t2.webp',
       right: '/t3.webp',
-      title: 'Talkspace Set 1',
-      description: "First set of images description"
+      name: 'Samir Maity',
+      role: 'Inventory Manager',
+      rating: 5,
+      review: "Talkspace made managing our inventory so much easier. Highly recommended!",
     },
-    { 
-      left: '/t2.webp', 
-      middle: '/t3.webp', 
+    {
+      left: '/t2.webp',
+      middle: '/t3.webp',
       right: '/t1.png',
-      title: 'Talkspace Set 2',
-      description: "Second set of images description"
+      name: 'Lisa Ray',
+      role: 'Marketing Lead',
+      rating: 4,
+      review: "The platform is intuitive and has boosted our team's productivity.",
     },
-    { 
-      left: '/t3.webp', 
-      middle: '/t1.png', 
+    {
+      left: '/t3.webp',
+      middle: '/t1.png',
       right: '/t2.webp',
-      title: 'Talkspace Set 3',
-      description: "Third set of images description"
-    }
+      name: 'John Doe',
+      role: 'Product Designer',
+      rating: 5,
+      review: "I love the user-friendly interface and fast support. Five stars!",
+    },
   ];
 
   const [currentSetIndex, setCurrentSetIndex] = useState(0);
@@ -73,10 +79,10 @@ export default function Testimonial() {
     }
 
     const onComplete = () => {
-      setCurrentSetIndex(prev => direction === 'left' 
-        ? (prev + 1) % imageSets.length 
+      setCurrentSetIndex(prev => direction === 'left'
+        ? (prev + 1) % imageSets.length
         : (prev - 1 + imageSets.length) % imageSets.length);
-      
+
       // Wait for React state update before resetting positions
       requestAnimationFrame(() => {
         gsap.set([currentLeftRef.current, currentMiddleRef.current, currentRightRef.current], {
@@ -175,16 +181,27 @@ export default function Testimonial() {
 
         {/* Center Content */}
         <div className="flex flex-col items-center lg:items-start text-center lg:text-left flex-1 z-20 px-6">
-          <h2 className="text-5xl font-bold mb-10 pt-6">Testimonial Stories</h2>
-          <h3 className="text-lg font-semibold">{imageSets[currentSetIndex].title}</h3>
-          <p className="text-gray-400 max-w-lg mb-4">
-            {imageSets[currentSetIndex].description}
-          </p>
-          <a href="#" className="text-white font-medium hover:underline mb-6">
-            View their review →
-          </a>
+          <h2 className="text-5xl font-bold mb-6 pt-6">Testimonial Stories</h2>
 
-          <div className="flex items-center gap-4 mb-16 pt-2">
+          {/* Reviewer First Name */}
+          <h3 className="text-2xl font-semibold mb-2">
+            {imageSets[currentSetIndex].name.split(' ')[0]}
+          </h3>
+
+          {/* Review Text */}
+          <p className="text-gray-400 max-w-lg mb-4">
+            {imageSets[currentSetIndex].review}
+          </p>
+
+          {/* Star Rating */}
+          <div className="flex gap-1 mb-6">
+            {Array.from({ length: imageSets[currentSetIndex].rating }).map((_, i) => (
+              <FaStar key={i} className="text-yellow-400" />
+            ))}
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="flex items-center gap-4">
             <button
               onClick={prevSlide}
               className="arrow-btn w-10 h-10 rounded-full border border-white flex items-center justify-center hover:bg-gray-800"
@@ -199,6 +216,7 @@ export default function Testimonial() {
             </button>
           </div>
         </div>
+
 
         {/* Right Image Container */}
         <div className="flex-shrink-0 rounded-2xl overflow-hidden w-[450px] h-96 relative -mr-[120px]">
