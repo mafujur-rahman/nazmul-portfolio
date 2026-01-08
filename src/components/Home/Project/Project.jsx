@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 
@@ -30,6 +29,7 @@ const projects = [
 
 const Projects = () => {
     const [index, setIndex] = useState(0);
+    const intervalRef = useRef();
 
     const topRef = useRef(null);
     const nextTopRef = useRef(null);
@@ -114,6 +114,18 @@ const Projects = () => {
         });
     };
 
+    useEffect(() => {
+        // Set up automatic slideshow
+        intervalRef.current = setInterval(goNext, 3000);
+        
+        // Clear interval on component unmount
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, [index]);
+
     // Current and next projects for images
     const currentProject = projects[index];
     const nextIndex = (index + 1) % projects.length;
@@ -122,25 +134,17 @@ const Projects = () => {
     return (
         <section className="bg-black text-white py-16 px-4 md:px-10 lg:px-16 overflow-hidden">
             <div className="max-w-6xl mx-auto relative">
-                {/* Header */}
-                <div className="flex items-center justify-between mb-10">
-                    <div>
-                        <h2 className="text-4xl font-bold mb-3">Featured Projects</h2>
-                        <p className="text-gray-400 text-lg max-w-2xl">
-                            Discover some of my finest graphic design work, blending creativity with visual storytelling to build compelling brand identities.
-                        </p>
-                    </div>
-                    <div className="flex space-x-3 text-xl">
-                        <button
-                            onClick={goNext}
-                            className="p-2 bg-gray-800 hover:bg-gray-700 rounded-full text-gray-300 hover:text-white transition"
-                        >
-                            <FaArrowRight />
-                        </button>
-                    </div>
+                {/* Modern Header */}
+                <div className="mb-16">
+                    <h2 className="text-5xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+                        Featured Projects
+                    </h2>
+                    <p className="text-gray-300 text-xl md:text-2xl max-w-3xl leading-relaxed">
+                        Discover some of my finest graphic design work, blending creativity with visual storytelling to build compelling brand identities.
+                    </p>
                 </div>
 
-                {/* === TOP IMAGE === */}
+                {/* Top Image */}
                 <div className="relative h-[320px] md:h-[450px] mb-10">
                     <div
                         className="absolute inset-0 rounded-xl overflow-hidden shadow-xl z-10"
@@ -156,7 +160,7 @@ const Projects = () => {
                     </div>
                 </div>
 
-                {/* === BOTTOM IMAGES === */}
+                {/* Bottom Images */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
                     <div className="relative h-[270px]">
                         <div

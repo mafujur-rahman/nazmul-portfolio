@@ -11,8 +11,8 @@ const Footer = () => {
         <footer className="relative bg-black text-white py-20 px-6 border-t border-white/10">
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
                 {/* Left: Brand or Logo */}
-                <div className="text-2xl font-bold text-white/90 tracking-wide">
-                    <span className="text-cyan-400">Nazmul</span>
+                <div className="text-2xl font-bold text-white/90 ">
+                    <img src="/logo-3.png" alt="" className="w-auto h-4"/>
                 </div>
 
                 {/* Center: Navigation Links */}
@@ -36,9 +36,7 @@ const Footer = () => {
 
                 {/* Right: Email Subscribe */}
                 <div className="flex flex-col md:items-end gap-3">
-                    <label htmlFor="email" className="text-sm text-white/70 mb-1 select-none">
-                        Stay in the loop:
-                    </label>
+                    
                     <div className="relative w-full md:w-72">
                         <input
                             type="email"

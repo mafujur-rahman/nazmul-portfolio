@@ -3,49 +3,55 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
-
 const services = [
     {
         title: "Brand Identity",
         description:
             "Craft visually compelling brand identities including logos, typography, and color schemes that communicate your brand's personality.",
         text: "Logo & Branding",
+        bgImage: "/bg-1.jpg"
     },
     {
         title: "Illustration Design",
         description:
             "Create custom illustrations that bring unique visual flair to your marketing, products, and digital platforms.",
         text: "Custom Artworks",
+        bgImage: "/bg-2.jpg"
     },
     {
         title: "UI/UX Design",
         description:
             "Design intuitive user interfaces and experiences for websites and mobile apps that enhance usability and engagement.",
         text: "App & Web UI",
+        bgImage: "/bg-1.jpg"
     },
     {
         title: "Social Media Graphics",
         description:
             "Design engaging social media assets like banners, post templates, and ad creatives that boost your online presence.",
         text: "Instagram, Facebook Ads",
+        bgImage: "/bg-2.jpg"
     },
     {
-        title: "Print Design",
+        title: "Custom Design",
         description:
             "Design for physical mediums such as business cards, flyers, posters, and brochures that leave a lasting impression.",
         text: "Flyers & Brochures",
+        bgImage: "/bg-1.jpg"
     },
     {
         title: "Presentation Design",
         description:
             "Transform dull slides into compelling presentations with custom visuals, layouts, and infographic elements.",
         text: "Slides & Decks",
+        bgImage: "/bg-2.jpg"
     },
     {
-        title: "Creative Consultation",
+        title: "Catalog Design",
         description:
             "Collaborate to develop visual strategies, creative direction, and brand consistency across all your projects.",
         text: "1-on-1 Creative Session",
+        bgImage: "/bg-1.jpg"
     },
 ];
 
@@ -153,9 +159,12 @@ export default function Services() {
                     <div
                         key={index}
                         ref={(el) => (cardsRef.current[index] = el)}
-                        className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-2xl cursor-pointer relative overflow-hidden shadow-lg transition-all duration-500 flex flex-col"
+                        className={`bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-2xl cursor-pointer relative overflow-hidden shadow-lg transition-all duration-500 flex flex-col ${index === activeIndex ? 'bg-cover bg-center' : ''}`}
                         onMouseEnter={() => setActiveIndex(index)}
-                        style={{ flex: index === activeIndex ? 3 : 1 }}
+                        style={{ 
+                            flex: index === activeIndex ? 3 : 1,
+                            backgroundImage: index === activeIndex ? `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${service.bgImage})` : ''
+                        }}
                     >
                         {/* Rotated Title */}
                         <div className="rotate-90 origin-left absolute lg:left-6 xl:left-10 2xl:left-16 top-2 text-md text-white/80 w-full pointer-events-none">
@@ -190,9 +199,12 @@ export default function Services() {
                     return (
                         <div
                             key={index}
-                            className="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-2xl shadow-md transition-all duration-300"
+                            className={`bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700 rounded-2xl shadow-md transition-all duration-300 ${isActive ? 'bg-cover bg-center' : ''}`}
                             onClick={() => setActiveIndex(index)}
                             onMouseEnter={() => setActiveIndex(index)}
+                            style={{
+                                backgroundImage: isActive ? `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${service.bgImage})` : ''
+                            }}
                         >
                             {/* Card Title */}
                             <div className="w-full text-left p-4 cursor-pointer select-none">
@@ -215,7 +227,6 @@ export default function Services() {
                     );
                 })}
             </div>
-
         </section>
     );
 }
